@@ -23,6 +23,7 @@ jobs:
       pr_number: ${{ github.event.pull_request.number || github.event.issue.number }}
       base_branch: ${{ github.event.pull_request.base.ref || '' }}
       enable_tier2: true
+      single_call_review: true
       auto_describe: true
       auto_improve: true
       response_language: en-US
