@@ -18,7 +18,7 @@ concurrency:
 jobs:
   pr-piet:
     if: ${{ github.event.sender.type != 'Bot' }}
-    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@test-gh29-2b8adea1-failsafe
+    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@main
     with:
       pr_number: ${{ github.event.pull_request.number || github.event.issue.number }}
       base_branch: ${{ github.event.pull_request.base.ref || '' }}
