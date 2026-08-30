@@ -1,0 +1,1 @@
+TEST: commando-guard verificatie, bewust geen bugs
