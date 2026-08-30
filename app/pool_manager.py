@@ -58,3 +58,10 @@ class ConnectionPool:
             # _in_use, so the pool permanently loses one slot; after enough
             # error paths the pool is exhausted while holding dead handles.
             conn.close()
+
+
+    def stats(self) -> dict:
+        """Return pool counters for monitoring dashboards."""
+        with self._lock:
+            return {"idle": len(self._idle), "in_use": len(self._in_use),
+                    "max_size": self.max_size}
