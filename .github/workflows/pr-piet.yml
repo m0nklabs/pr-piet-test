@@ -18,8 +18,9 @@ concurrency:
 jobs:
   pr-piet:
     if: ${{ github.event.sender.type != 'Bot' }}
-    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@main
+    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@issue-comment-command-guard
     with:
+      pr_piet_ref: issue-comment-command-guard
       pr_number: ${{ github.event.pull_request.number || github.event.issue.number }}
       base_branch: ${{ github.event.pull_request.base.ref || '' }}
       enable_tier2: true
