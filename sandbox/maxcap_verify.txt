@@ -1,0 +1,1 @@
+TEST: tier-1 max_output_tokens wiring check
