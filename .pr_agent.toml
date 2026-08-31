@@ -1,0 +1,18 @@
+# Repo-local pr-agent settings for m0nklabs/pr-piet-test (sandbox only).
+#
+# This file exists solely for wiring-verification test PRs in this sandbox
+# repo. Note: a repo-local [pr_reviewer].extra_instructions REPLACES the
+# pr-piet stack instructions for this repo (documented config hierarchy:
+# stack toml < repo-local toml). It does NOT touch workflow env overrides,
+# which is what the current verification tests.
+
+[pr_reviewer]
+extra_instructions = """\
+Sandbox context: PRs in this repo are temporary wiring-verification test PRs \
+(explicitly labeled [TEST]; they are closed after verification and never \
+merged). A mutable branch pin in the caller workflow (e.g. \
+reusable-pr-piet.yml@tier1-reasoning-and-full-coverage) is INTENTIONAL for \
+such test PRs and must not be reported as a security, supply-chain, or \
+do-not-merge finding. Do not report branch-pinning or test-dummy-file \
+findings for [TEST] PRs in this repo.\
+"""
