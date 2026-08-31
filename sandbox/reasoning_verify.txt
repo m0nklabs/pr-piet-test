@@ -1,0 +1,15 @@
+[TEST] reasoning-budget + full coverage wiring verification
+
+This is dummy test material for a PR-Piet wiring verification PR.
+It exists only to trigger a pull_request run of the PR-Piet workflow
+with the caller pinned to reusable-pr-piet.yml@tier1-reasoning-and-full-coverage.
+
+Expected tier-1 env in that reusable workflow:
+  config.reasoning_max_tokens = 32000
+  config.max_model_tokens     = 128000  (was 64000)
+  config.max_output_tokens    = 49152
+
+Tier 2 stays unchanged: max_model_tokens 64000, no reasoning budget.
+
+The test PR that carries this file will be closed (never merged) once
+the verification is complete.
