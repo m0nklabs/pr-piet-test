@@ -28,5 +28,7 @@ jobs:
       auto_describe: true
       auto_improve: true
       response_language: en-US
+      # TEST-PIN: gate-script tier2_pending_guard.py bestaat alleen op deze ref
+      pr_piet_ref: tier2-pending-guard
     secrets:
       GUARDIAN_API_KEY: ${{ secrets.GUARDIAN_API_KEY }}
