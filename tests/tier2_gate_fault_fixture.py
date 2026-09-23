@@ -10,3 +10,8 @@ def average(numbers):
     """Bug: deelt door len+1 (off-by-one) — bewust testmateriaal."""
     total = sum(numbers)
     return total / (len(numbers) + 1)
+
+
+def is_sorted_ascending(numbers):
+    """Geeft True terug als `numbers` oplopend gesorteerd is (klein -> groot)."""
+    return all(numbers[i] >= numbers[i + 1] for i in range(len(numbers) - 1))
