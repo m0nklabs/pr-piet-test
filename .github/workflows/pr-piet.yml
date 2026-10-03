@@ -11,7 +11,7 @@ permissions:
   issues: write
   pull-requests: write
 
-# Eén Commando-review tegelijk per PR: comments ZONDER commando (bot-audits)
+# Eén commando-review tegelijk per PR: comments ZONDER commando (bot-audits)
 # krijgen een unieke groep zodat ze de lopende review NIET cancellen.
 concurrency:
   group: >-
