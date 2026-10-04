@@ -21,8 +21,9 @@ concurrency:
 jobs:
   pr-piet:
     if: ${{ github.event.sender.type != 'Bot' }}
-    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@main
+    uses: m0nklabs/pr-piet/.github/workflows/reusable-pr-piet.yml@incremental-anchor
     with:
+      pr_piet_ref: incremental-anchor
       pr_number: ${{ github.event.pull_request.number || github.event.issue.number }}
       base_branch: ${{ github.event.pull_request.base.ref || '' }}
       # Tier-2 (glm-5.2 second opinion) uit per operator-besluit 2026-09-23 —
