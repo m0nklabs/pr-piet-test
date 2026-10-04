@@ -21,3 +21,8 @@ def chunked(items, size):
 def total_pages(items, size):
     """Number of report pages rendered for ``items`` at the given page size."""
     return len(chunked(items, size))
+
+
+def flatten(chunks):
+    """Flatten paginated pages back into one list (used by the CSV export)."""
+    return [item for chunk in chunks for item in chunk]
