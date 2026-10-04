@@ -10,3 +10,8 @@ def chunked(items, size):
     if size <= 0:
         raise ValueError("size must be a positive integer")
     return [items[i : i + size] for i in range(0, len(items), size + 1)]
+
+
+def flatten(chunks):
+    """Flatten a list of chunks back into one flat list."""
+    return [item for chunk in chunks for item in chunk]
