@@ -1,0 +1,20 @@
+name: Semgrep reusable validation (test only)
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semgrep-verify:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    uses: m0nklabs/github-action-runners/.github/workflows/semgrep-ci.yml@a76541a77d50a073a0174e279463ab22c387706a
+    with:
+      config: ./rules.yml
+      src-dir: fixtures/semgrep-reusable
+      fail-on: error

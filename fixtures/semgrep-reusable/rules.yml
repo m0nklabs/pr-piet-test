@@ -1,0 +1,6 @@
+rules:
+  - id: semgrep-reusable-deliberate-error
+    languages: [python]
+    severity: ERROR
+    message: Synthetic test-only marker must be blocked.
+    pattern: print("SEMGREP_REUSABLE_DELIBERATE_ERROR")
