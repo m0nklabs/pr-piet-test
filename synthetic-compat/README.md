@@ -24,6 +24,23 @@ Controls cover ASCII curl-pipe and curl-eval positives, nonexecuting negatives, 
 
 The experiment may complete successfully while recording a nonzero scanner exit: that means the comparison evidence was collected, **not** that a scanner coverage gate passed. No production policy or engine pin is changed. Candidate results must be read from actual same-run evidence; the [1.186.0 release notes](https://github.com/semgrep/semgrep/releases/tag/v1.186.0) do not establish a parser repair.
 
+## Aggregate schema 2: bounded failure evidence
+
+The aggregate has `schema: 2`. The former coarse `failed_stages` list is replaced by `failures`, whose entries have exactly these fields:
+
+| Field | Allowed values |
+| --- | --- |
+| `scope` | `inputs`, `1.184.0`, or `1.186.0` |
+| `stage` | A fixed source-code allowlist: input acquisition/download/identity, license download, OCI token/manifest/digest/platform selection, image pull/inspect/identity, running version, scanner execution, report read/summary; `unexpected` is the fallback. Exact labels are in `STAGES`. |
+| `kind` | `http`, `timeout`, `exit`, `identity`, `json`, `io`, `transport`, or `unexpected` |
+| `http_status` | Integer 100–599, otherwise `null` |
+| `exit_code` | Observed command exit integer −255–255, otherwise `null` |
+| `timeout_seconds` | Configured exhausted timeout integer 0–3600, otherwise `null` |
+
+These labels are authored constants, not copied exception strings. HTTP URLs, bodies, headers, credentials, command arguments, paths and exception messages are never published. Unknown exceptions retain only a static fallback label. A report-read/summary failure preserves the observed scanner exit; it is not relabelled as a successful scan. Cleanup/publication rules remain unchanged: unverified container cleanup withholds the entire artifact.
+
+An earlier schema-1 run completed input acquisition but returned no version result. Its raw temporary evidence was intentionally deleted; its two coarse version labels cannot identify the historical failing substage. The schema change repairs that observability defect, **not a proven scanner, image or network defect**. It adds no retries, exclusions, timeout increases, pin changes or policy bypasses. Local image presence alone does not prove this workflow reaches its scanner: OCI verification and pull precede its version check.
+
 ## Local contracts
 
 Run `python3 -m unittest discover -s synthetic-compat -p 'test_*.py' -v` for offline sanitizer, guard and cleanup contracts. These tests perform no downloads, Docker operations or fixture execution. This is a test-only pull request: close without merging after collecting evidence, then remove its test branch.
