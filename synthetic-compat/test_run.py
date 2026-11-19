@@ -40,7 +40,11 @@ class Contracts(unittest.TestCase):
             RUN.summarize({"version": "unexpected"}, "1.184.0", RUN.IMAGES["1.184.0"], 0)
 
     def test_actor_guard_precedes_downloads(self):
-        with patch.dict(os.environ, {"GITHUB_ACTOR": "other"}, clear=True), patch.object(RUN, "fetch_inputs") as fetch:
+        with patch.dict(os.environ, {
+            "GITHUB_REPOSITORY": "m0nklabs/pr-piet-test",
+            "GITHUB_ACTOR": "other",
+            "GITHUB_EVENT_NAME": "pull_request",
+        }, clear=True), patch.object(RUN, "fetch_inputs") as fetch:
             self.assertEqual(RUN.main(), 2)
             fetch.assert_not_called()
 
