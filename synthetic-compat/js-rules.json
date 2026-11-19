@@ -1,0 +1,18 @@
+{
+  "rules": [
+    {
+      "id": "synthetic-jsx-marker",
+      "languages": ["javascript"],
+      "message": "Synthetic marker",
+      "severity": "INFO",
+      "pattern": "parser_marker(...)"
+    },
+    {
+      "id": "synthetic-jsx-attribute",
+      "languages": ["javascript"],
+      "message": "Synthetic attribute",
+      "severity": "INFO",
+      "pattern": "<Probe title=$VALUE />"
+    }
+  ]
+}

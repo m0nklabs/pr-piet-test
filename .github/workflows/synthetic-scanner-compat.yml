@@ -1,0 +1,58 @@
+name: Synthetic scanner compatibility
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '.github/workflows/synthetic-scanner-compat.yml'
+      - 'synthetic-compat/**'
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    if: >-
+      github.repository == 'm0nklabs/pr-piet-test' &&
+      github.actor == 'm0nk111' &&
+      github.event.pull_request.head.repo.full_name == 'm0nklabs/pr-piet-test'
+    runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Compare immutable scanner versions on synthetic inputs
+        id: compare
+        run: python3 synthetic-compat/run.py
+      - name: Upload allowlisted aggregate only
+        if: always() && steps.compare.outputs.aggregate_path != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: synthetic-scanner-aggregate
+          path: ${{ steps.compare.outputs.aggregate_path }}
+          if-no-files-found: error
+          retention-days: 7
+      - name: Remove fresh aggregate staging directory
+        if: always() && steps.compare.outputs.aggregate_path != ''
+        env:
+          AGGREGATE_PATH: ${{ steps.compare.outputs.aggregate_path }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import shutil
+          import sys
+          try:
+              aggregate = Path(os.environ['AGGREGATE_PATH'])
+              target = aggregate.parent.resolve()
+              temporary = Path(os.environ['RUNNER_TEMP']).resolve()
+              assert aggregate.name == 'summary.json'
+              assert target.parent == temporary
+              assert target.name.startswith('synthetic-compat-aggregate-')
+              assert not aggregate.parent.is_symlink()
+              shutil.rmtree(target)
+          except BaseException:
+              print('Aggregate staging cleanup did not complete.')
+              sys.exit(1)
+          PY
