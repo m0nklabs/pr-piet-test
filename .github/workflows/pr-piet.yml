@@ -30,6 +30,10 @@ jobs:
       # regel op true.
       enable_tier2: false
       single_call_review: true
+      # TEST-PIN: tier-1 default-id verificatie (openai/z-ai/glm-5.3-flash);
+      # wordt direct na de test teruggezet — caller blijft verder ongewijzigd.
+      model_tier1: openai/z-ai/glm-5.3-flash
+      model_tier1_label: glm-5.3-flash
       auto_describe: true
       auto_improve: true
       response_language: en-US
